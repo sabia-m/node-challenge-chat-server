@@ -8,13 +8,25 @@ const app = express();
 app.use(cors());
 app.use(bodyP());
 
-const welcomeMessage = {
+let messages = [
+  {
   id: 0,
   from: "Bart",
   text: "Welcome to CYF chat system!",
-};
+},
+  {
+  id: 1,
+  from: "Me",
+  text: "Hungry",
+},
+  {
+  id: 2,
+  from: "Todd",
+  text: "Roadside",
+}
+];
 
-let messages = [welcomeMessage];
+//let messages = [welcomeMessage];
 
 console.log(messages)
 
@@ -28,22 +40,21 @@ app.get("/messages", (request, response) => {
 
 app.post("/messages", (request, response) => {
   if (request.body.text === '' || request.body.from === ''){
-    return response.status(404)
+  return response.status(404)
   } else {
   messages.push(request.body);
   response.json({ success: true })};
 });
 
-
-app.get("/messages/:messageId", (request, response) => {
+app.get("/messages/:id", (request, response) => {
   const messageId = request.params.id
-  const chosenMessage = messages.find(message => message.messageId === messageId)
+  const chosenMessage = messages.find(message => message.id == messageId)
   response.json(chosenMessage)
 })
 
-app.delete("/messages/:messageId", (request, response) => {
+app.delete("/messages/:id", (request, response) => {
   const messageId = request.params.id
-  messages = messages.filter(message => message.messageId !== messageId)
+   messages = messages.filter(message => message.id !== messageId)
   response.json({success: true})
 })
 
