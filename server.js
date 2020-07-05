@@ -27,12 +27,12 @@ let messages = [
     {
   id: 3,
   from: "Alina",
-  text: "Hey queen",
+  text: "Queen",
 },
   {
   id: 4,
   from: "Serena",
-  text: "BTS",
+  text: "Jimin",
 },
   {
   id: 5,
