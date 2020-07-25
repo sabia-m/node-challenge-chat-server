@@ -87,7 +87,17 @@ app.get('/messages/search', (request, response) => {
 })
 
 app.get('/messages/latest', (request, response) => {
-  response.json(messages.slice(messages.length - 10, messages.length))
+  const client = new mongodb.MongoClient(uri)
+
+  client.connect(function(){
+  const db = client.db('messages')
+  const collection = db.collection('chats')
+
+  collection.find().sort({"_id": -1}).limit(10).toArray(function(error, result) {
+    response.send(error || result)
+    client.close();
+  })
+})
 })
 
 app.get("/messages/:id", (request, response) => {
